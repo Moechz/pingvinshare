@@ -1,0 +1,102 @@
+{
+  "app_id": "pingvinsharedocker",
+  "title": "pingvin-share",
+  "image": "stonith404/pingvin-share:v1.13.0",
+  "repo_name": "pingvinshare",
+  "mode": "plain",
+  "container_port": 3000,
+  "category": [
+    "Utilities"
+  ],
+  "volumes": [
+    {
+      "host": "/Volume1/DockerAppData/pingvinsharedocker/img",
+      "container": "/opt/app/frontend/public/img"
+    },
+    {
+      "host": "/Volume1/DockerAppData/pingvinsharedocker/data",
+      "container": "/opt/app/backend/data"
+    }
+  ],
+  "env": {
+    "TZ": "Asia/Shanghai"
+  },
+  "auth": "stonith404",
+  "upstream_url": "https://github.com/stonith404/pingvin-share",
+  "upstream_license": "BSD-2-Clause",
+  "descript": "A self-hosted file sharing platform that combines lightness and beauty, perfect for seamless and efficient file sharing. Packaged for TerraMaster TOS 7: the official Docker Hub image runs as a container on your NAS, keeps its data in the application data folder (so it survives restarts and updates), and is opened from its desktop icon.",
+  "release_note": "1. First release.",
+  "important": "First run: open the web UI and complete the initial setup. Data lives in /Volume1/DockerAppData/pingvinsharedocker/ and survives restarts and updates. The container runs as uid 1000, so mounted folders must be readable by that user. Needs DockerEngine; configure a registry mirror if Docker Hub is unreachable. Back up the application data folder before uninstalling with data removal. Plain HTTP on the LAN.",
+  "probe": {
+    "user_in_image": "(root)",
+    "entrypoint": [
+      "sh",
+      "./scripts/docker/create-user.sh"
+    ],
+    "cmd": [
+      "sh",
+      "./scripts/docker/entrypoint.sh"
+    ],
+    "exposed_ports": [
+      3000
+    ],
+    "declared_volumes": [],
+    "image_healthcheck": [
+      "CMD-SHELL",
+      "/bin/sh -c '(if [[ \"$CADDY_DISABLED\" = \"true\" ]]; then curl -fs http://localhost:${BACKEND_PORT:-8080}/api/health; else curl -fs http://localhost:3000/api/health; fi) || exit 1'"
+    ],
+    "digest": "docker.1panel.live/stonith404/pingvin-share@sha256:6bf2bcd3043ee68cb61264f0857511ccf7f212fdb984382b7f2d491635184ad6",
+    "architecture": "x86_64",
+    "platforms": [],
+    "http_client_in_image": "curl",
+    "trial_run": {
+      "ok": true,
+      "http_code": "500",
+      "state": "running",
+      "paths": [],
+      "host_port": 18000,
+      "log_tail": "insecureHTTPParser: undefined,\n      joinDuplicateHeaders: undefined,\n      path: '/api/configs',\n      _ended: false,\n      res: null,\n      aborted: false,\n      timeoutCb: [Function: emitRequestTimeout],\n      upgradeOrConnect: false,\n      parser: null,\n      maxHeadersCount: null,\n      reusedSocket: false,\n      host: 'localhost',\n      protocol: 'http:',\n      _redirectable: [Circular *1],\n      [Symbol(shapeMode)]: false,\n      [Symbol(kCapture)]: false,\n      [Symbol(kBytesWritten)]: 0,\n      [Symbol(kNeedDrain)]: false,\n      [Symbol(corked)]: 0,\n      [Symbol(kChunkedBuffer)]: [],\n      [Symbol(kChunkedLength)]: 0,\n      [Symbol(kSocket)]: [Socket],\n      [Symbol(kOutHeaders)]: [Object: null prototype],\n      [Symbol(errored)]: null,\n      [Symbol(kHighWaterMark)]: 65536,\n      [Symbol(kRejectNonStandardBodyWrites)]: false,\n      [Symbol(kUniqueHeaders)]: null\n    },\n    _currentUrl: 'http://localhost:8080/api/configs',\n    [Symbol(shapeMode)]: true,\n    [Symbol(kCapture)]: false\n  },\n  cause: AggregateError [ECONNREFUSED]: \n      at internalConnectMultiple (node:net:1139:18)\n      at afterConnectMultiple (node:net:1714:7)\n      at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17) {\n    code: 'ECONNREFUSED',\n    [errors]: [ [Error], [Error] ]\n  }\n}",
+      "files_in_mounts": ""
+    },
+    "docker_hub": {},
+    "github": {
+      "owner": "stonith404",
+      "repo": "pingvin-share",
+      "description": "A self-hosted file sharing platform that combines lightness and beauty, perfect for seamless and efficient file sharing.",
+      "license": "BSD-2-Clause",
+      "homepage": "https://stonith404.github.io/pingvin-share/"
+    }
+  },
+  "healthcheck": [
+    "CMD-SHELL",
+    "curl -fsS http://127.0.0.1:3000/ >/dev/null || exit 1"
+  ],
+  "platform": "x86_64",
+  "user": "1000:1000",
+  "publisher": "Moechz",
+  "compose_project": "pingvinsharedocker",
+  "github_repo": "pingvinshare",
+  "upstream_version": "1.13.0",
+  "release_tag_prefix": "v",
+  "version": "1.13.0-1",
+  "help": "https://github.com/Moechz/pingvinshare/issues",
+  "official": "https://github.com/stonith404/pingvin-share",
+  "license": "BSD-2-Clause",
+  "docker_socket": false,
+  "group_add": [],
+  "platforms": [
+    "x86_64",
+    "aarch64"
+  ],
+  "translations": {
+    "zh-cn": {
+      "descript": "类似 Firefox Send 的文件分享服务，支持链接与过期时间。",
+      "important": "首次使用请打开网页完成初始化。数据保存在 DockerAppData/pingvinsharedocker，重启和升级不会丢失。容器以 uid 1000 运行，挂载目录需对该用户可读。需要 DockerEngine；Docker Hub 不可达时先配置镜像加速。卸载并删除数据前请备份。局域网内为 HTTP。"
+    },
+    "zh-hk": {
+      "descript": "类似 Firefox Send 的文件分享服务，支持链接与过期时间。",
+      "important": "首次使用請開啟網頁完成初始化。資料保存在 DockerAppData/pingvinsharedocker，重新啟動和升級不會遺失。容器以 uid 1000 運行，掛載目錄需對該使用者可讀。需要 DockerEngine；Docker Hub 不可達時先設定鏡像加速。解除安裝並刪除資料前請備份。區域網路內為 HTTP。"
+    }
+  },
+  "host_port": 8078
+}
